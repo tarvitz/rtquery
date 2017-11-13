@@ -1,0 +1,23 @@
+language: python
+
+python:
+  - "2.7"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.7"
+
+install:
+  - "if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then pip install -e .; pip install coveralls; fi"
+  - "if [[ $TRAVIS_PYTHON_VERSION == '3.3' ]]; then pip install -e .; pip install coveralls; fi"
+  - "if [[ $TRAVIS_PYTHON_VERSION == '3.4' ]]; then pip install -e .; pip install coveralls; fi"
+  - "if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then pip install -e .; pip install coveralls; fi"
+  - "if [[ $TRAVIS_PYTHON_VERSION == '3.6' ]]; then pip install -e .; pip install coveralls; fi"
+  - pip install coveralls pyyaml
+
+script:
+  - "coverage run --source=rtquery -m py.test"
+
+after_success:
+- coveralls
