@@ -14,7 +14,7 @@ if sys.version_info[:2] == (3, 4):
     requirements = ['typing']
 
 classifiers = [
-    'Development Status :: 2 - Pre-Alpha',
+    'Development Status :: 4 - Beta',
     'Environment :: Other Environment',
     'Intended Audience :: Developers',
     'License :: OSI Approved :: BSD License',
