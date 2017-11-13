@@ -17,7 +17,6 @@ classifiers = [
     'Development Status :: 2 - Pre-Alpha',
     'Environment :: Other Environment',
     'Intended Audience :: Developers',
-    'Indented Audience :: System Administrators',
     'License :: OSI Approved :: BSD License',
     'Operating System :: POSIX',
     'Programming Language :: Python :: 3.4',

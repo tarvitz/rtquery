@@ -3,6 +3,7 @@ venv
 .tox
 .idea/
 build/
+dist/
 .eggs/
 .coverage
 .cache

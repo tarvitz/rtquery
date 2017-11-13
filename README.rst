@@ -8,8 +8,8 @@ RT Query
 .. image:: https://coveralls.io/repos/github/tarvitz/rtquery/badge.svg?branch=master
   :target: https://coveralls.io/github/tarvitz/rtquery?branch=master
 
-.. image:: https://badge.fury.io/py/rtquerty.svg
-  :target: http://badge.fury.io/py/rtquery
+.. image:: https://badge.fury.io/py/rtquery.svg
+    :target: https://badge.fury.io/py/rtquery
 
 .. contents::
     :local:
