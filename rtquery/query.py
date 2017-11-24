@@ -60,6 +60,9 @@ class Q(Node):
         """
         q = []
         for el in self.children:
+            if not bool(el):
+                continue
+
             if isinstance(el, Q):
                 q.append(el.resolve())
             else:

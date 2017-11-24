@@ -5,6 +5,10 @@ Changelog
     :local:
     :depth: 2
 
+0.9.2
+-----
+- Resolve blank nodes properly: by skipping them
+
 0.9.1
 -----
 - Adjust travis, coveralls environment

@@ -58,6 +58,14 @@ class TestQueryResolve(unittest.TestCase):
             "((Subject NOT LIKE '[topic]') AND Id < 3 AND Id > 1))"
         )
 
+    def test_q_blank_resolve(self):
+        qset = Q() | Q() | Q()
+        qset |= Q(Status='new')
+        self.assertEqual(
+            qset.resolve(),
+            "(Status = 'new')"
+        )
+
 
 class TestQInternals(unittest.TestCase):
     def test_combine(self):
