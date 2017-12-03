@@ -5,6 +5,10 @@ Changelog
     :local:
     :depth: 2
 
+0.10.0
+------
+- Append user input according to simple grammar rules
+
 0.9.2
 -----
 - Resolve blank nodes properly: by skipping them

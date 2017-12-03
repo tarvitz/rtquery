@@ -13,4 +13,4 @@ script:
   - "coverage run --source=rtquery -m py.test"
 
 after_success:
-- coveralls
+  - coveralls

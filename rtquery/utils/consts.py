@@ -1,0 +1,25 @@
+LITERAL = 'LITERAL'
+STRING_LITERAL = 'STRING_LITERAL'
+INTEGER = 'INTEGER'
+
+#: Binary operations
+IS = '='
+IS_NOT = '=!'
+MATCHES = '~='
+MATCHES_NOT = '~!'
+GREAT_THAN = '>'
+LESS_THAN = '<'
+OR = '|'
+AND = '&'
+
+#: Unary operations
+MINUS = '-'
+
+LOW_PRIORITY_OPS = (AND, OR)
+HIGH_PRIORITY_OPS = (IS, IS_NOT, MATCHES, MATCHES_NOT, GREAT_THAN, LESS_THAN)
+
+LPAREN = '('
+RPAREN = ')'
+
+ESCAPE = '\\'
+EOF = 'EOF'
