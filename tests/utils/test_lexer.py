@@ -43,6 +43,18 @@ class LexerTestCase(unittest.TestCase):
         token = lexer.get_next_token()
         self.assertEqual(token, Token(LITERAL, 'resolved'))
 
+    def test_complex_with_string_literal(self):
+        text = "Queue='complex-queue' & Status != resolved"
+        lexer = Lexer(text)
+        count = 0
+        last_token = None
+        while lexer.current_char is not None:
+            last_token = lexer.get_next_token()
+            count += 1
+        self.assertEqual(count, 7)
+        self.assertIsInstance(last_token, Token)
+        self.assertEqual(last_token, Token(LITERAL, "resolved"))
+
     def test_string_literal(self):
         text = '"new status for example"'
         lexer = Lexer(text)

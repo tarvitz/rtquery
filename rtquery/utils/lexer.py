@@ -68,6 +68,7 @@ class Lexer(object):
                 self.advance()
                 result += literal_eval('"\\%s"' % self.current_char)
                 self.advance()
+        self.advance()
         return result
 
     def integer(self):
