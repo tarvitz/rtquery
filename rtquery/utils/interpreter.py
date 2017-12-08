@@ -42,6 +42,10 @@ class FilterQueryInterpreter(visitors.NodeVisitor):
     def visit_literal(node):
         return node.value
 
+    @staticmethod
+    def visit_stringliteral(node):
+        return node.value
+
     def interpret(self):
         tree = self.parser.parse()
         return self.visit(tree)

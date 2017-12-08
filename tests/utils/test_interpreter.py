@@ -16,6 +16,22 @@ class FilterParserTestCase(unittest.TestCase):
         self.assertIsInstance(qset, Q)
         self.assertEqual(qset.resolve(), "(Status = 'new')")
 
+    def test_composite_binary_expression(self):
+        text = "(Status = 'new' & Owner = 'user')"
+        qset = FilterQueryInterpreter(FilterParser(Lexer(text))).interpret()
+        self.assertIsInstance(qset, Q)
+        self.assertEqual(qset.resolve(),
+                         "((Status = 'new') AND (Owner = 'user'))")
+
+    def test_complex_binary_expression(self):
+        text = "(Status = 'new' & Owner = 'user') | Id > 10"
+        qset = FilterQueryInterpreter(FilterParser(Lexer(text))).interpret()
+        self.assertIsInstance(qset, Q)
+        self.assertEqual(
+            qset.resolve(),
+            "(((Status = 'new') AND (Owner = 'user')) OR (Id > 10))"
+        )
+
     def test_unary_expression(self):
         text = "Age > -10"
         qset = FilterQueryInterpreter(FilterParser(Lexer(text))).interpret()

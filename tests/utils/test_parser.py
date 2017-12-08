@@ -30,5 +30,29 @@ class FilterParserTestCase(unittest.TestCase):
         with self.assertRaises(ParserError) as err:
             FilterParser(Lexer(">20=50")).parse()
         self.assertEqual(
-            err.exception.args, ("Wrong token: >",)
+            err.exception.args,
+            ("Statement should start with Literal or StringLiteral, "
+             "'Token(>, >)' given",)
+        )
+
+        with self.assertRaises(ParserError):
+            FilterParser(Lexer("10 ~ text")).parse()
+
+        with self.assertRaises(ParserError):
+            FilterParser(Lexer("& ~ text")).parse()
+
+    def test_parser_error_in_composite(self):
+        with self.assertRaises(ParserError) as err:
+            FilterParser(Lexer("Status=&")).parse()
+        self.assertEqual(
+            err.exception.args,
+            ("Wrong statement right part: 'Token(&, &)'",)
+        )
+
+    def test_parser_error_in_statement(self):
+        with self.assertRaises(ParserError) as err:
+            FilterParser(Lexer("Status&1")).parse()
+        self.assertEqual(
+            err.exception.args,
+            ("Wrong operation '&' for statement given",)
         )

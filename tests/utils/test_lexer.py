@@ -20,16 +20,16 @@ class LexerTestCase(unittest.TestCase):
         self.assertEqual(token, Token(LITERAL, "new"))
 
     def test_complex(self):
-        text = "CF.{Tags}  ~  release & Status != resolved"
+        text = "CF_Tags  ~  release-on-prod & Status != resolved"
         lexer = Lexer(text)
         token = lexer.get_next_token()
-        self.assertEqual(token, Token(LITERAL, 'CF.{Tags}'))
+        self.assertEqual(token, Token(LITERAL, 'CF_Tags'))
 
         token = lexer.get_next_token()
         self.assertEqual(token, Token(MATCHES, '~'))
 
         token = lexer.get_next_token()
-        self.assertEqual(token, Token(LITERAL, 'release'))
+        self.assertEqual(token, Token(LITERAL, 'release-on-prod'))
 
         token = lexer.get_next_token()
         self.assertEqual(token, Token(AND, '&'))
@@ -88,7 +88,8 @@ class LexerTestCase(unittest.TestCase):
         with self.assertRaises(LexerError) as err:
             while lexer.current_char is not None:
                 lexer.get_next_token()
-        self.assertEqual(err.exception.args, ("Wrong operator: !%", ))
+        self.assertEqual(err.exception.args,
+                         ('Parsing char `!` at position 7', ))
 
     def test_invalid_format(self):
         text = "%%%"
@@ -99,4 +100,15 @@ class LexerTestCase(unittest.TestCase):
         self.assertEqual(
             err.exception.args,
             ("Parsing char `%s` at position %i" % ('%', 0), )
+        )
+
+    def test_invalid_format_peek_is_None(self):
+        text = '!'
+        lexer = Lexer(text)
+        with self.assertRaises(LexerError) as err:
+            while lexer.current_char is not None:
+                lexer.get_next_token()
+        self.assertEqual(
+            err.exception.args,
+            ('Parsing char `!` at position 0',)
         )

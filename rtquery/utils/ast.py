@@ -39,6 +39,12 @@ class Literal(AST):
         self.token = token
         self.value = token.value
 
+    def __repr__(self):
+        return '<%s: %s>' % (self.__class__.__name__, self.value)
+
+    def __str__(self):
+        return repr(self)
+
 
 class StringLiteral(Literal):
     """
@@ -50,6 +56,12 @@ class StringLiteral(Literal):
     - 'etc'
     """
     __slots__ = ['token', 'value']
+
+    def __repr__(self):
+        return '<%s: \"%s\">' % (self.__class__.__name__, self.value)
+
+    def __str__(self):
+        return repr(self)
 
 
 class Num(AST):
@@ -82,6 +94,15 @@ class BinOp(AST):
         self.left = left
         self.token = self.op = op
         self.right = right
+
+    def __repr__(self):
+        return '<%s (%s, %s, %s)>' % (
+            self.__class__.__name__,
+            self.left, self.op, self.right
+        )
+
+    def __str__(self):
+        return repr(self)
 
 
 class UnaryOp(AST):

@@ -25,18 +25,32 @@ class Lexer(object):
         self.pos = 0
         self.current_char = self.text[self.pos]
 
-    def advance(self):
+    def advance(self, forward=1):
         """
         Advance the ``pos`` pointer and set the ``current_char`` variable.
 
+        :param int forward: amount of steps forward
         :rtype: None
         :return: None
         """
-        self.pos += 1
+        self.pos += forward
         if self.pos > len(self.text) - 1:  # EOF
             self.current_char = None
         else:
             self.current_char = self.text[self.pos]
+
+    def peek(self):
+        """
+        Returns a next character after current position
+
+        :rtype: str | None
+        :return:
+        """
+        peek_pos = self.pos + 1
+        if peek_pos > len(self.text) - 1:
+            return None
+        else:
+            return self.text[peek_pos]
 
     def skip_whitespace(self):
         while (self.current_char is not None
@@ -46,7 +60,7 @@ class Lexer(object):
     def literal(self):
         """Return a string literal consumed from input"""
         result = ''
-        valid_sequence = ['_', '.', '{', '}']
+        valid_sequence = ['_', '-']
         while (self.current_char is not None
                and (self.current_char.isalnum()
                     or self.current_char in valid_sequence)):
@@ -127,16 +141,13 @@ class Lexer(object):
                 self.advance()
                 return Token(IS, '=')
 
-            if self.current_char == '!':
-                self.advance()
-                if self.current_char == '=':
-                    self.advance()
-                    return Token(IS_NOT, '!=')
-                elif self.current_char == '~':
-                    self.advance()
-                    return Token(MATCHES_NOT, '!~')
-                else:
-                    self.error("Wrong operator: !%s" % self.current_char)
+            if self.current_char == '!' and self.peek() == '=':
+                self.advance(2)
+                return Token(IS_NOT, '!=')
+
+            if self.current_char == '!' and self.peek() == '~':
+                self.advance(2)
+                return Token(MATCHES_NOT, '!~')
 
             if self.current_char == '|':
                 self.advance()
