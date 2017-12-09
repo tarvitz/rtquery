@@ -1,4 +1,5 @@
 from ast import literal_eval
+from typing import Generator
 
 from . ast import Token
 from . consts import (
@@ -166,3 +167,7 @@ class Lexer(object):
                 )
             )
         return Token(EOF, None)
+
+    def __iter__(self) -> Generator[Token, None, None]:
+        while self.current_char is not None:
+            yield self.get_next_token()

@@ -120,3 +120,10 @@ class LexerTestCase(unittest.TestCase):
             err.exception.args,
             ('Parsing char `!` at position 0',)
         )
+
+    def test_iter(self):
+        text = 'Status ~ open & (Test ~ message | Owner = user)'
+        tokens = [x for x in Lexer(text)]
+        self.assertEqual(len(tokens), 13)
+        self.assertEqual(tokens[0], Token(LITERAL, 'Status'))
+        self.assertEqual(tokens[-1], Token(RPAREN, ')'))
