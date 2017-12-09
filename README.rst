@@ -73,7 +73,7 @@ Usage
 
 Extra functionality
 -------------------
-In addition to existent :py:class:`rtquery.Q` you can also try to use ``utils.query``
+In addition to existent ``rtquery.Q`` you can also try to use ``utils.query``
 builder which is simple dsl to make ``Q`` objects from user input (argument parser for example)
 
 .. code-block:: python
