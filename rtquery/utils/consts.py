@@ -4,9 +4,9 @@ INTEGER = 'INTEGER'
 
 #: Binary operations
 IS = '='
-IS_NOT = '=!'
-MATCHES = '~='
-MATCHES_NOT = '~!'
+IS_NOT = '!='
+MATCHES = '~'
+MATCHES_NOT = '!~'
 GREAT_THAN = '>'
 LESS_THAN = '<'
 OR = '|'
