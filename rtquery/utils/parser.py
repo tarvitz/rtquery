@@ -1,5 +1,5 @@
 from . consts import (
-    LITERAL, STRING_LITERAL, LPAREN, RPAREN, INTEGER, MINUS,
+    LITERAL, STRING_LITERAL, LPAREN, INTEGER, MINUS,
     LOW_PRIORITY_OPS, HIGH_PRIORITY_OPS
 )
 
@@ -17,7 +17,7 @@ class FilterParser(object):
         self.lexer = lexer
         self.current_token = lexer.get_next_token()
 
-    def shift(self, token_type):
+    def shift(self):
         """
         Steps forward and ``eat`` next token with storing it to
         ``self.current_token``
@@ -30,16 +30,16 @@ class FilterParser(object):
     def composite(self):
         token = self.current_token
         if token.type == LITERAL:
-            self.shift(token.type)
+            self.shift()
             return Literal(token)
         elif token.type == STRING_LITERAL:
-            self.shift(token.type)
+            self.shift()
             return StringLiteral(token)
         elif token.type == MINUS:
-            self.shift(token.type)
+            self.shift()
             return UnaryOp(op=token, expr=self.composite())
         elif token.type == INTEGER:
-            self.shift(token.type)
+            self.shift()
             return Num(token)
         else:
             raise ParserError("Wrong statement right part: '%r'" % token)
@@ -51,28 +51,28 @@ class FilterParser(object):
                 "Statement should start with Literal or StringLiteral, "
                 "'%r' given" % token
             )
-        self.shift(token.type)
+        self.shift()
 
         op_token = self.current_token
         if op_token.type not in HIGH_PRIORITY_OPS:
             raise ParserError(
                 "Wrong operation %r for statement given" % op_token.type
             )
-        self.shift(op_token.type)
+        self.shift()
         right = self.composite()
         return BinOp(left=Literal(token), op=op_token, right=right)
 
     def statement_group(self):
         if self.current_token.type == LPAREN:
-            self.shift(LPAREN)
+            self.shift()
             node = self.statement_group()
-            self.shift(RPAREN)
+            self.shift()
             return node
 
         statement = self.statement()
         while self.current_token.type in LOW_PRIORITY_OPS:
             token = self.current_token
-            self.shift(token.type)
+            self.shift()
             statement = BinOp(left=statement, op=token, right=self.statement())
         return statement
 
@@ -86,7 +86,7 @@ class FilterParser(object):
         node = self.statement_group()
         while self.current_token.type in LOW_PRIORITY_OPS:
             token = self.current_token
-            self.shift(token.type)
+            self.shift()
             node = BinOp(left=node, op=token, right=self.statement_group())
         return node
 
