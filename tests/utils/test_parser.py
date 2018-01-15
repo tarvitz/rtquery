@@ -18,6 +18,10 @@ class FilterParserTestCase(unittest.TestCase):
         self.assertIsInstance(node, BinOp)
         self.assertEqual(node.right.token, Token(LITERAL, "new"))
 
+        node = FilterParser(lexer=Lexer('Status=""')).parse()
+        self.assertIsInstance(node, BinOp)
+        self.assertEqual(node.right.token, Token(STRING_LITERAL, ''))
+
     def test_unary_operations(self):
         node = FilterParser(lexer=Lexer("Age=-10")).parse()
         self.assertIsInstance(node, BinOp)

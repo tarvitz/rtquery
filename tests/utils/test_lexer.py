@@ -121,6 +121,12 @@ class LexerTestCase(unittest.TestCase):
             ('Parsing char `!` at position 0',)
         )
 
+    def test_blank_string_literal(self):
+        text = '""'
+        lexer = Lexer(text)
+        token = lexer.get_next_token()
+        self.assertEqual(token, Token(STRING_LITERAL, ''))
+
     def test_iter(self):
         text = 'Status ~ open & (Test ~ message | Owner = user)'
         tokens = [x for x in Lexer(text)]
