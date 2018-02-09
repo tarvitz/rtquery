@@ -5,6 +5,11 @@ Changelog
     :local:
     :depth: 2
 
+0.10.1
+------
+- Minor fixes and test improvements
+- Fix statement <binop> statement_group expressions
+
 0.10.0
 ------
 - Append user input according to simple grammar rules
