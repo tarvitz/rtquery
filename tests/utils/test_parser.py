@@ -30,6 +30,13 @@ class FilterParserTestCase(unittest.TestCase):
         self.assertEqual(node.right.expr.token, Token(INTEGER, 10))
         self.assertEqual(node.right.token, Token(MINUS, '-'))
 
+    def test_complex(self):
+        text = """
+        (Queue = dev | Queue = devops) & 
+        "CF.{Sprint}" = "2018-w6" & 
+        (Owner ~ ad | Owner ~ dor)"""
+        node = FilterParser(lexer=Lexer(text)).parse()
+
     def test_parser_error(self):
         with self.assertRaises(ParserError) as err:
             FilterParser(Lexer(">20=50")).parse()

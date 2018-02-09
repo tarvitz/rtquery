@@ -73,7 +73,11 @@ class FilterParser(object):
         while self.current_token.type in LOW_PRIORITY_OPS:
             token = self.current_token
             self.shift()
-            statement = BinOp(left=statement, op=token, right=self.statement())
+            if self.current_token.type == LPAREN:
+                rhs_statement = self.statement_group()
+            else:
+                rhs_statement = self.statement()
+            statement = BinOp(left=statement, op=token, right=rhs_statement)
         return statement
 
     def expression(self):
